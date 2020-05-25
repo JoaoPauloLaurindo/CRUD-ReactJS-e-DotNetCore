@@ -34,6 +34,8 @@ namespace Application
 
             services.AddControllers();
 
+            services.AddCors();
+
             services.AddAutoMapper(typeof(Startup));
 
             services.ResolveDependecies();
@@ -46,6 +48,13 @@ namespace Application
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(configs =>
+            {
+                configs.AllowAnyOrigin();
+                configs.AllowAnyMethod();
+                configs.AllowAnyHeader();
+            });
 
             app.UseHttpsRedirection();
 
