@@ -24,7 +24,7 @@ namespace Data.Mapping
 
             builder.Property(x => x.Telefone)
                 .IsRequired()
-                .HasColumnType("varchar(14)")
+                .HasColumnType("varchar(11)")
                 .HasColumnName("Telefone");
 
             builder.Property(x => x.Endereco)
@@ -34,7 +34,7 @@ namespace Data.Mapping
 
             builder.Property(x => x.Cep)
                 .IsRequired()
-                .HasColumnType("varchar(9)")
+                .HasColumnType("varchar(8)")
                 .HasColumnName("Cep");
 
             builder.Property(x => x.Sexo)
