@@ -1,10 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { FaArrowLeft, FaEdit, FaTrashAlt } from 'react-icons/fa';
+import api from '../../services/api'
 
 import './styles.css'
 
 export default function Funcionalidade() {
+    const [funcionalidades, setFuncionalidades] = useState([]);
+    const history = useHistory();
+
+    useEffect(() => {
+        api.get('funcionalidade')
+            .then(response => {
+                setFuncionalidades(response.data);
+            });
+    }, []);
+
+    function Editar(id) {
+        history.push(`editar-funcionalidade/${id}`);
+    }
+
     return (
         <div className="user-container">
             <header>
@@ -20,35 +35,17 @@ export default function Funcionalidade() {
 
             <div className="content">
                 <ul>
-                    <li>
-                        <strong>Funcionalidade</strong>
-                        <p>Remover</p>
-                        <div className="actions">
-                            <FaEdit size={20} color="#000" />
-                            <FaTrashAlt size={20} color="#000" />
-                        </div>
+                    {funcionalidades.map(funcionalidade => (
+                        <li key={funcionalidade.id}>
+                            <strong>Funcionalidade</strong>
+                            <p>{funcionalidade.nome}</p>
+                            <div className="actions">
+                                <FaEdit size={20} color="#000" onClick={() => Editar(funcionalidade.id)} />
+                                <FaTrashAlt size={20} color="#000" />
+                            </div>
 
-                    </li>
-
-                    <li>
-                        <strong>Funcionalidade</strong>
-                        <p>Alterar</p>
-                        <div className="actions">
-                            <FaEdit size={20} color="#000" />
-                            <FaTrashAlt size={20} color="#000" />
-                        </div>
-
-                    </li>
-
-                    <li>
-                        <strong>Funcionalidade</strong>
-                        <p>Criar</p>
-                        <div className="actions">
-                            <FaEdit size={20} color="#000" />
-                            <FaTrashAlt size={20} color="#000" />
-                        </div>
-
-                    </li>
+                        </li>
+                    ))}
                 </ul>
             </div>
 

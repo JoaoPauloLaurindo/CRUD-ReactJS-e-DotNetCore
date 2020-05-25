@@ -40,10 +40,16 @@
 .actions {
     display: flex;
     justify-content: space-between;
+    margin: 10px, 0px
 }
 
 .actions svg:hover {
     color: red;
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
 }
 
 header {

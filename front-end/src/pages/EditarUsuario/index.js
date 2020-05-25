@@ -1,62 +1,75 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import api from '../../services/api'
-
+import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
+import api from '../../services/api';
 
 import './styles.css';
 
-export default function RegistrarUsuario() {
+export default function EditarUsuario(idUsuario) {
+    const [usuario, setUsuario] = useState('{}');
     const [nome, setNome] = useState('');
     const [sexo, setSexo] = useState('');
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
     const [cep, setCep] = useState('');
     const [endereco, setEndereco] = useState('');
+    const [perfilId, setPerfilId] = useState('');
     const [id, setId] = useState('');
     const [perfis, setPerfis] = useState([]);
-
-    const history = useHistory();
 
     useEffect(() => {
         api.get('perfil')
             .then(response => {
                 setPerfis(response.data);
             });
-    }, []);
 
-    async function handleRegister() {
+        api.get(`usuario/af51da70-d6c5-46ea-c82a-08d8005de0b8`)
+            .then(resultado => {
+                setPerfilId(resultado.data.perfilId);
+                setUsuario(resultado.data.id);
+                setNome(resultado.data.nome);
+                setSexo(resultado.data.sexo);
+                setCpf(resultado.data.cpf);
+                setEndereco(resultado.data.endereco)
+                setCep(resultado.data.cep);
+                setTelefone(resultado.data.telefone);
+            });
+    }, [idUsuario]);
+
+    async function handleAtualizar() {
         const data = {
+            "id": usuario,
             nome,
+            telefone,
             sexo,
             cpf,
-            telefone,
             cep,
             endereco,
-            "perfilId": id
+            perfilId,
+
         };
 
-        try {
-            await api.post('usuario', data);
-            alert('Cadastrado com sucesso');
+        console.log(data);
 
-            history.push("/usuario");
+        try {
+            await api.put('usuario', data)
+            alert('Usuário atualizado');
         } catch (error) {
-            alert('Ops! Houve um erro, tente novamente');
+            alert('Erro ao atualizar o usuário');
+
         }
-    }
+    };
 
     return (
-        <div className="register-container">
+        <div className="edit-container">
             <header>
                 <Link to="/usuario">
                     <FaArrowLeft size={18} color="#FFF" />
                 </Link>
-                <h1>Registrar um novo usuário</h1>
+                <h1>Editar usuário</h1>
             </header>
-
             <div className="content">
-                <form onSubmit={handleRegister}>
+                <form onSubmit={handleAtualizar}>
                     <div className="input-group">
                         <h3>Nome</h3>
                         <input
@@ -119,7 +132,7 @@ export default function RegistrarUsuario() {
 
                     <div className="input-group">
                         <h3>Perfil</h3>
-                        <select name="perfis" onChange={e => setId(e.target.value)}>
+                        <select name="perfis" onChange={e => setPerfilId(e.target.value)}>
                             {perfis.map(perfil => (
                                 <option key={perfil.id} value={perfil.id}>{perfil.nome}</option>
                             ))}
@@ -128,7 +141,7 @@ export default function RegistrarUsuario() {
                     </div>
 
                     <button type="submit">
-                        Registrar
+                        Atualizar
                     </button>
 
                 </form>

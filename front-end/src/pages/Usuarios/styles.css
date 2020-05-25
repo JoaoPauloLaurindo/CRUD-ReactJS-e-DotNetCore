@@ -56,6 +56,6 @@ header h1 {
     margin-left: 10px;
 }
 
-/* strong {
-    color: #000;
-} */
+svg {
+    cursor: pointer;
+}

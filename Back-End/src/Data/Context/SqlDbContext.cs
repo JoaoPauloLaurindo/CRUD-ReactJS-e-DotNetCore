@@ -30,5 +30,11 @@ namespace Data.Context
 
             base.OnModelCreating(builder);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging(true);
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }

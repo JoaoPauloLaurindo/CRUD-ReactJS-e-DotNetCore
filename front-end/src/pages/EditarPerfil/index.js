@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
-import api from '../../services/api'
+import api from '../../services/api';
 
-import './styles.css';
+import './styles.css'
 
-export default function RegistrarPerfil() {
-    const history = useHistory();
+export default function EditarPerfil(idPerfil) {
     const [name, setName] = useState('');
+    const [perfilId, setPerfilId] = useState('');
 
-    async function handleRegister() {
+    useEffect(() => {
+        api.get(`perfil/${idPerfil}`)
+            .then(resultado => {
+                setName(resultado.data.nome);
+                setPerfilId(resultado.data.id);
+            })
+    }, [idPerfil]);
 
-        const data = {
-            "nome": name,
-        };
-
+    async function handleEditar() {
         try {
-            await api.post('perfil', data)
-            alert('Cadastrado com sucesso');
-            history.push("/perfil");
-        } catch (error) {
-            alert('Ops! Houve um erro, tente novamente');
-        }
+            const data = {
+                "id": perfilId,
+                "nome": name,
+            };
 
+            await api.put('perfil', data);
+            alert('Perfil atualizado');
+        } catch (error) {
+            alert('Erro ao atualizar, tente novamente');
+        }
     }
 
     return (
@@ -35,7 +41,7 @@ export default function RegistrarPerfil() {
             </header>
 
             <div className="content">
-                <form onSubmit={handleRegister}>
+                <form onSubmit={handleEditar}>
                     <div className="input-group">
                         <h3>Perfil</h3>
                         <input
@@ -47,7 +53,7 @@ export default function RegistrarPerfil() {
                     </div>
 
                     <button type="submit">
-                        Registrar
+                        Atualizar
                     </button>
 
                 </form>
