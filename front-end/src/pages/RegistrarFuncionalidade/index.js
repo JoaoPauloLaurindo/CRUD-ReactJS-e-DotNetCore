@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../services/api'
 
@@ -8,11 +8,21 @@ import './styles.css';
 
 export default function RegistrarFuncionalidade() {
     const [name, setName] = useState('');
+    const [perfis, setPerfis] = useState([]);
+    const [perfilId, setPerfilId] = useState('');
+
+    useEffect(() => {
+        api.get('perfil')
+            .then(response => {
+                setPerfis(response.data);
+            });
+
+    }, []);
 
     async function handleRegister() {
         const data = {
             "nome": name,
-            "perfilId": "F022F9EE-D845-4D5A-DACA-08D8005822B8",
+            "perfilId": perfilId,
         }
 
         try {
@@ -41,6 +51,16 @@ export default function RegistrarFuncionalidade() {
                             placeholder="Nome da funcionalidade"
                             value={name}
                             onChange={e => setName(e.target.value)} />
+                    </div>
+
+                    <div className="input-group">
+                        <h3>Perfil</h3>
+                        <select name="perfis" onChange={e => setPerfilId(e.target.value)}>
+                            {perfis.map(perfil => (
+                                <option key={perfil.id} value={perfil.id}>{perfil.nome}</option>
+                            ))}
+
+                        </select>
                     </div>
 
 

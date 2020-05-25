@@ -20,6 +20,8 @@ export default function Usuarios() {
         api.delete(`usuario/deletar/${id}`)
             .then(response => {
                 alert('Usuário excluido');
+                setUsuarios(usuarios.filter(usuario => usuario.id !== id));
+
             }).catch(err => {
                 alert('Erro ao excluir usuário');
             });

@@ -22,6 +22,18 @@ export default function Perfil() {
         history.push(`editar-perfil/${id}`);
     }
 
+    function Remover(id) {
+
+        api.delete(`funcionalidade/${id}`)
+            .then(response => {
+                alert('Usuário excluido');
+
+                setPerfis(perfis.filter(perfil => perfil.id !== id));
+            }).catch(err => {
+                alert('Erro ao excluir usuário');
+            });
+    }
+
     return (
         <div className="user-container">
             <header>
@@ -41,15 +53,9 @@ export default function Perfil() {
                         <li key={perfil.id}>
                             <strong>Perfil</strong>
                             <p>{perfil.nome}</p>
-                            <strong style={{ marginTop: 10 }}>Funcionalidades</strong>
-                            {perfil.funcionalidades.map(funcionalidade => (
-                                <p key={funcionalidade.id}>
-                                    {funcionalidade.nome}
-                                </p>
-                            ))}
                             <div className="actions">
                                 <FaEdit size={20} color="#000" onClick={() => Editar(perfil.id)} />
-                                <FaTrashAlt size={20} color="#000" />
+                                <FaTrashAlt size={20} color="#000" onClick={() => Remover(perfil.id)} />
                             </div>
 
                         </li>

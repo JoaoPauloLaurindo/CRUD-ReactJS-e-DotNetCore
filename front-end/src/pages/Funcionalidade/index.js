@@ -20,6 +20,17 @@ export default function Funcionalidade() {
         history.push(`editar-funcionalidade/${id}`);
     }
 
+    function Remover(id) {
+
+        api.delete(`funcionalidade/${id}`)
+            .then(response => {
+                alert('Usuário excluido');
+                setFuncionalidades(funcionalidades.filter(funcionalidade => funcionalidade.id !== id));
+            }).catch(err => {
+                alert('Erro ao excluir usuário');
+            });
+    }
+
     return (
         <div className="user-container">
             <header>
@@ -41,7 +52,7 @@ export default function Funcionalidade() {
                             <p>{funcionalidade.nome}</p>
                             <div className="actions">
                                 <FaEdit size={20} color="#000" onClick={() => Editar(funcionalidade.id)} />
-                                <FaTrashAlt size={20} color="#000" />
+                                <FaTrashAlt size={20} color="#000" onClick={() => Remover(funcionalidade.id)} />
                             </div>
 
                         </li>
