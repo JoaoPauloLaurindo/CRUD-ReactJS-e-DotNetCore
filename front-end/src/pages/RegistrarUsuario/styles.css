@@ -20,6 +20,10 @@
     margin: 10px 0px;
 }
 
+.input-group p {
+    color: #FFF;
+}
+
 input, select {
     width: 100%;
     max-width: 500px;

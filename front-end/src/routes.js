@@ -23,9 +23,9 @@ export default function Routes() {
                 <Route path='/registrar-usuario' component={RegistrarUsuario} />
                 <Route path='/registrar-perfil' component={RegistrarPerfil} />
                 <Route path='/registrar-funcionalidade' component={RegistrarFuncionalidade} />
-                <Route path='/editar-usuario/:idUsuario' component={EditarUsuario} />
-                <Route path='/editar-perfil/:idPerfil' component={EditarPerfil} />
-                <Route path='/editar-funcionalidade/:idFuncionalidade' component={EditarFuncionalidade} />
+                <Route path='/editar-usuario/:id'><EditarUsuario /></Route>
+                <Route path='/editar-perfil/:id'><EditarPerfil /></Route>
+                <Route path='/editar-funcionalidade/:id'><EditarFuncionalidade /></Route>
             </Switch>
         </BrowserRouter>
     );

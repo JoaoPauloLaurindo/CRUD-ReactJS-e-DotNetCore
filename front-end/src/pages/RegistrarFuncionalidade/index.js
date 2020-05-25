@@ -56,6 +56,7 @@ export default function RegistrarFuncionalidade() {
                     <div className="input-group">
                         <h3>Perfil</h3>
                         <select name="perfis" onChange={e => setPerfilId(e.target.value)}>
+                            <option selected>Selecione um perfil</option>
                             {perfis.map(perfil => (
                                 <option key={perfil.id} value={perfil.id}>{perfil.nome}</option>
                             ))}

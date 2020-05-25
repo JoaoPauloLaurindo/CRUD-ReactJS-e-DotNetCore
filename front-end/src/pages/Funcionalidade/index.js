@@ -24,10 +24,10 @@ export default function Funcionalidade() {
 
         api.delete(`funcionalidade/${id}`)
             .then(response => {
-                alert('Usuário excluido');
+                alert('Funcionalidade excluida');
                 setFuncionalidades(funcionalidades.filter(funcionalidade => funcionalidade.id !== id));
             }).catch(err => {
-                alert('Erro ao excluir usuário');
+                alert('Erro ao excluir funcionalidade');
             });
     }
 

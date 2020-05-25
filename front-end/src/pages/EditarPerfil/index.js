@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import api from '../../services/api';
 
 import './styles.css'
 
-export default function EditarPerfil(idPerfil) {
+export default function EditarPerfil() {
     const [name, setName] = useState('');
     const [perfilId, setPerfilId] = useState('');
+    let { id } = useParams();
 
     useEffect(() => {
-        api.get(`perfil/${idPerfil}`)
+        api.get(`perfil/${id}`)
             .then(resultado => {
                 setName(resultado.data.nome);
                 setPerfilId(resultado.data.id);
             })
-    }, [idPerfil]);
+    }, [id]);
 
     async function handleEditar() {
         try {

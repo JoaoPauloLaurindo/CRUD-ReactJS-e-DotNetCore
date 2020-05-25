@@ -33,7 +33,8 @@ export default function RegistrarUsuario() {
             telefone,
             cep,
             endereco,
-            "perfilId": id
+            "perfilId": id,
+            "status": true,
         };
 
         try {
@@ -85,6 +86,7 @@ export default function RegistrarUsuario() {
                             value={cpf}
                             onChange={e => setCpf(e.target.value)}
                         />
+                        <p>Apenas números</p>
                     </div>
 
                     <div className="input-group">
@@ -95,6 +97,7 @@ export default function RegistrarUsuario() {
                             value={telefone}
                             onChange={e => setTelefone(e.target.value)}
                         />
+                        <p>Apenas números</p>
                     </div>
 
                     <div className="input-group">
@@ -105,6 +108,7 @@ export default function RegistrarUsuario() {
                             value={cep}
                             onChange={e => setCep(e.target.value)}
                         />
+                        <p>Apenas números</p>
                     </div>
 
                     <div className="input-group">
@@ -120,6 +124,7 @@ export default function RegistrarUsuario() {
                     <div className="input-group">
                         <h3>Perfil</h3>
                         <select name="perfis" onChange={e => setId(e.target.value)}>
+                            <option selected>Selecione um perfil</option>
                             {perfis.map(perfil => (
                                 <option key={perfil.id} value={perfil.id}>{perfil.nome}</option>
                             ))}

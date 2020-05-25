@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import api from '../../services/api';
 
 import './styles.css';
 
-export default function EditarUsuario(idUsuario) {
+export default function EditarUsuario() {
     const [usuario, setUsuario] = useState('{}');
     const [nome, setNome] = useState('');
     const [sexo, setSexo] = useState('');
@@ -14,8 +14,8 @@ export default function EditarUsuario(idUsuario) {
     const [cep, setCep] = useState('');
     const [endereco, setEndereco] = useState('');
     const [perfilId, setPerfilId] = useState('');
-    const [id, setId] = useState('');
     const [perfis, setPerfis] = useState([]);
+    let { id } = useParams();
 
     useEffect(() => {
         api.get('perfil')
@@ -23,7 +23,7 @@ export default function EditarUsuario(idUsuario) {
                 setPerfis(response.data);
             });
 
-        api.get(`usuario/af51da70-d6c5-46ea-c82a-08d8005de0b8`)
+        api.get(`usuario/${id}`)
             .then(resultado => {
                 setPerfilId(resultado.data.perfilId);
                 setUsuario(resultado.data.id);
@@ -34,7 +34,7 @@ export default function EditarUsuario(idUsuario) {
                 setCep(resultado.data.cep);
                 setTelefone(resultado.data.telefone);
             });
-    }, [idUsuario]);
+    }, [id]);
 
     async function handleAtualizar() {
         const data = {
